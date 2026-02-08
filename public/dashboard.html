@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Video Rewards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-functions-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-check-compat.js"></script>
+
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Invisible reCAPTCHA container -->
+<div id="recaptcha-container" style="display:none;"></div>
+
+
+<header class="dash-header">
+  <h1>🎬 Video Rewards</h1>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</header>
+
+<main class="dash-container">
+
+  <section class="user-card">
+    <h2>Welcome 👋</h2>
+    <p id="userEmail"></p>
+
+    <div class="balance-box">
+      <span>Current Balance</span>
+      <strong>R<span id="userBalance">0.00</span></strong>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bg">
+        <div id="progressBar"></div>
+      </div>
+      <p id="progressText"></p>
+    </div>
+
+    <button id="withdrawBtn" onclick="requestPayout()" disabled style="background: #eee; cursor: not-allowed;">💸 Withdraw</button>
+  </section>
+
+  <section class="video-card">
+    <video
+      id="rewardVideo"
+      controls
+      muted
+      playsinline
+      controlsList="nodownload"
+      style="width:100%; border-radius:8px; background: #000;">
+    </video>
+
+    <button id="earnBtn" onclick="rewardUser()">
+      🎁 Claim Reward (R0.50)
+    </button>
+    
+    <p style="font-size: 0.75rem; color: #888; text-align: center; margin-top: 5px;">
+        Tip: If video doesn't start, tap the play icon.
+    </p>
+  </section>
+
+</main>
+
+<div id="toast" class="toast"></div>
+
+<div id="withdrawModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>💸 Withdraw Earnings</h2>
+    
+    <div style="text-align: center; font-size: 1.8rem; font-weight: bold; margin: 15px 0; color: #28a745;">
+        R<span id="modalBalDisplay">0.00</span>
+    </div>
+
+    <p class="hint" style="text-align: center; margin-bottom: 10px;">Minimum payout: R15</p>
+
+    <label>PayPal Email</label>
+    <input
+      type="email"
+      id="paypalEmail"
+      placeholder="your-paypal@email.com"
+      autofocus
+      required
+    />
+
+    <input 
+  type="hidden" 
+  id="withdrawAmount" 
+/>
+    <p class="hint">Your full balance will be converted to USD during PayPal processing.</p>
+
+    <div class="modal-actions">
+      <button onclick="submitWithdraw()">Request Payout</button>
+      <button class="cancel" onclick="closeWithdraw()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 1. Your Firebase Config (Keep yours exactly as it is)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDBYzvleKKLKvKtkEuu8utwZHJnc70lh3E",
+    authDomain: "videorewardsweb.firebaseapp.com",
+    projectId: "videorewardsweb",
+    storageBucket: "videorewardsweb.firebasestorage.app",
+    messagingSenderId: "844494435984",
+    appId: "1:844494435984:web:3011f3871a3eeefc95ca15"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  // 2. 🔥 THE DEBUG FIX: Must come BEFORE activation
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+    console.log("🛠️ Dashboard Debug Mode Active. Check console for token!");
+  }
+
+  // 3. Activate App Check
+  firebase.appCheck().activate(
+    new firebase.appCheck.ReCaptchaV3Provider('6LeZI1EsAAAAAOhgs3Dru3eoYQcsJjRWQhkqjB39'),
+    true // allows automatic token refreshing
+  );
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>

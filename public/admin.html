@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Video Rewards</title>
+
+  <!-- 🔥 Firebase CORE -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-check-compat.js"></script>
+
+  <!-- 🔥 Firebase SERVICES -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-functions-compat.js"></script>
+
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="dashboard-body">
+
+<header class="dash-header">
+  <h1>🛡️ Admin Control Panel</h1>
+</header>
+
+<main class="dash-container">
+  <!-- ================= SYSTEM OVERVIEW ================= -->
+  <section class="admin-card">
+    <h2>System Overview</h2>
+    <div class="admin-stats-grid">
+      <div class="stat-card">
+        <h3>Total Users</h3>
+        <p id="totalUsers">0</p>
+      </div>
+      <div class="stat-card">
+        <h3>User Earnings</h3>
+        <p>R<span id="totalEarningsByUsers">0.00</span></p>
+      </div>
+      <div class="stat-card">
+        <h3>Admin Revenue</h3>
+        <p>R<span id="adminRevenue">0.00</span></p>
+      </div>
+      <div class="stat-card danger">
+        <h3>Pending Payouts</h3>
+        <p>R<span id="pendingPayouts">0.00</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ADMIN WITHDRAW ================= -->
+  <section class="admin-card">
+    <h2>Admin PayPal Withdrawal</h2>
+    <div class="withdraw-container">
+      <div class="balance-info">
+        <p>Total Revenue: <strong>R<span id="displayAdminRev">0.00</span></strong></p>
+        <p>Safe to Withdraw: <strong style="color:#28a745">R<span id="safeToWithdraw">0.00</span></strong></p>
+        <p class="hint">Ensures users' R15.00 pools are never touched.</p>
+      </div>
+
+      <input type="email" id="adminPayPalEmail" placeholder="Your PayPal Email">
+      <div style="display:flex;gap:10px;">
+        <input type="number" id="adminWithdrawAmount" placeholder="Amount (R)">
+        <button onclick="processAdminPayPalWithdraw(this)" class="verify-btn">
+
+          Request PayPal Payout
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= USER MANAGEMENT ================= -->
+  <section class="admin-card">
+    <h2>User Management</h2>
+    <input type="text" id="userSearchInput" placeholder="Search user by email...">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Balance</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="userSearchTable">
+        <tr><td colspan="4">Enter an email above to search.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= PAYOUT REQUESTS ================= -->
+  <section class="admin-card">
+    <h2>Pending Payout Requests</h2>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>User Email</th>
+          <th>PayPal Email</th>
+          <th>Amount (ZAR)</th>
+          <th>Requested</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="payoutTable">
+        <tr><td colspan="5">Loading payout requests...</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= USER QUERIES ================= -->
+  <section class="admin-card">
+    <h2>User Queries</h2>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Message</th>
+          <th>Received</th>
+        </tr>
+      </thead>
+      <tbody id="queryTable">
+        <tr><td colspan="3">No queries yet.</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<button class="logout-btn" onclick="logout()">Logout</button>
+
+<footer>
+  <p>&copy; 2026 • Admin Management System • Secure Backend Active</p>
+</footer>
+
+<!-- ================= FIREBASE INIT + APP CHECK ================= -->
+
+
+<!-- ================= APP LOGIC ================= -->
+<script src="admin.js"></script>
+
+<script>
+  function logout() {
+    firebase.auth().signOut().then(() => {
+      location.href = "index.html";
+    });
+  }
+</script>
+
+</body>
+</html>

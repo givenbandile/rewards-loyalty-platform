@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Video Rewards</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+
+</head>
+<body>
+
+<section id="auth">
+    <h2>Create Your Account</h2>
+    <p class="hint">Please enter your real details for payment verification.</p>
+    
+    <input id="fullName" type="text" placeholder="Full Name (Required)" required>
+    <input id="phone" type="tel" placeholder="Phone Number (e.g. 071...)" required>
+    <input id="email" type="email" placeholder="Email Address" required>
+    <input id="password" type="password" placeholder="Create Password" required>
+    
+    <button id="regBtn" onclick="handleSignup()">🚀 Create Account</button>
+    <p><a href="index.html" style="color: #3498db;">Already have an account? Login</a></p>
+</section>
+
+<script>
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDBYzvleKKLKvKtkEuu8utwZHJnc70lh3E", // Make sure this matches index.html
+        authDomain: "videorewardsweb.firebaseapp.com",
+        projectId: "videorewardsweb",
+        storageBucket: "videorewardsweb.firebasestorage.app",
+        messagingSenderId: "844494435984",
+        appId: "1:844494435984:web:3011f3871a3eeefc95ca15"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    async function handleSignup() {
+        const btn = document.getElementById("regBtn");
+        const name = document.getElementById("fullName").value;
+        const phone = document.getElementById("phone").value;
+        const mail = document.getElementById("email").value;
+        const pass = document.getElementById("password").value;
+
+        if(!name || !phone || !mail || !pass) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        btn.innerText = "Creating Account...";
+        btn.disabled = true;
+
+        try {
+            // 1. Create User in Firebase Auth
+            const cred = await firebase.auth().createUserWithEmailAndPassword(mail, pass);
+            
+            // 2. Send Welcome Verification Email
+            await cred.user.sendEmailVerification();
+
+            // 3. Save details to Firestore
+            await db.collection("users").doc(cred.user.uid).set({
+                fullName: name,
+                phone: phone,
+                email: mail,
+                balance: 0,
+                role: "user",
+                status: "active",
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("Account created! Check your email to verify your account before logging in.");
+            window.location.href = "index.html";
+
+        } catch (e) {
+            alert(e.message);
+            btn.innerText = "Create Account";
+            btn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>

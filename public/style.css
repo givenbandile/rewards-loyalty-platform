@@ -1,0 +1,677 @@
+/* ===== Global Reset ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f1f4f8; /* Light Gray Blue */
+    color: #1a1a1a;           /* Near Black for maximum readability */
+    line-height: 1.7;
+    padding: 12px;
+}
+
+/* ===== Header & Navigation ===== */
+header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 1.2rem;
+    text-align: center;
+    border-radius: 14px;
+    margin-bottom: 18px;
+}
+
+header h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: #ecf0f1;
+    margin: 0 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ===== Sections / Cards ===== */
+section {
+    background: #ffffff;      /* Pure White */
+    color: #2c3e50;           /* Dark slate blue for headings/text */
+    margin-bottom: 20px;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    animation: fadeUp 0.5s ease;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 14px;
+    font-size: 20px;
+}
+
+/* Ensure all text inside dashboard/auth is dark by default */
+#auth h2, #dashboard h2, #payout-card h3, p {
+    color: #2c3e50;
+}
+
+/* ===== Inputs ===== */
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: 1.5px solid #dcdfe4;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #fafafa;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #3498db;
+    background: #fff;
+}
+
+/* ===== Buttons ===== */
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.25s ease;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Primary Button */
+#auth button {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+#auth button:hover {
+    opacity: 0.95;
+}
+
+/* Logout Button */
+.logout-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+/* ===== Dashboard ===== */
+.dashboard-card {
+    text-align: center;
+}
+
+/* Balance Box */
+.balance-container {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    padding: 22px;
+    border-radius: 14px;
+    margin: 18px 0;
+    border: 2px solid #4caf50;
+}
+
+.currency {
+    font-size: 22px;
+    color: #2e7d32;
+    margin-right: 4px;
+}
+
+#userBalance {
+    font-size: 34px;
+    font-weight: 700;
+    color: #1b5e20;
+}
+
+/* ===== Video Box ===== */
+.video-box {
+    margin-top: 20px;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+video {
+    width: 100%;
+    max-height: 380px;
+    display: block;
+}
+
+#rewardVideo {
+  width: 100%;
+  max-width: 500px;
+  min-height: 250px; /* Ensures the box is visible even before the video loads */
+  background: black; /* Makes the video area stand out */
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 15px;
+}
+
+/* ===== Helper Text ===== */
+.hint {
+    font-size: 13px;
+    color: #7a7a7a;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* ===== Payout Card ===== */
+#payout-card {
+    background: #fff8e1;
+    color: #856404; /* readable on yellow */
+    border: 2px dashed #ff9800;
+}
+
+/* ===== Footer ===== */
+footer {
+    text-align: center;
+    padding: 18px;
+    color: #95a5a6;
+    font-size: 12px;
+}
+
+/* ===== Dark Mode ===== */
+body.dark {
+    background-color: #0f172a;
+    color: #f8fafc; /* Very light gray/white */
+}
+
+body.dark header {
+    background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+body.dark section {
+    background: #1e293b; /* Dark Blue/Gray */
+    box-shadow: none;
+    border: 1px solid #334155;
+}
+
+body.dark h2, body.dark h3, body.dark p, body.dark li {
+    color: #f8fafc;
+}
+
+body.dark input,
+body.dark select {
+    background: #020617;
+    color: #e5e7eb;
+    border-color: #334155;
+}
+
+body.dark .balance-container {
+    background: #022c22;
+    border-color: #22c55e;
+}
+
+body.dark #payout-card {
+    background: #451a03; /* Dark brown for dark mode */
+    color: #fde68a;
+    border: 1px dashed #f59e0b;
+}
+
+/* ===== Bottom Navigation ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 100;
+}
+
+.bottom-nav button {
+    background: none;
+    font-size: 22px;
+    padding: 10px;
+}
+
+body.dark .bottom-nav {
+    background: #020617;
+}
+
+/* ===== Loading State ===== */
+button.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+button.loading::after {
+    content: " ⏳";
+}
+
+/* ===== Toast ===== */
+#toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 14px;
+    z-index: 200;
+}
+
+#toast.show {
+    opacity: 1;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+/* Specific visibility fix for Balance in Dark Mode */
+body.dark #userBalance {
+    color: #4ade80; /* Brighter neon green for dark mode */
+}
+
+body.dark .currency {
+    color: #86efac; /* Lighter mint green */
+}
+
+/* Fix for hint text in dark mode (was too dark to see) */
+body.dark .hint {
+    color: #94a3b8; /* Light slate gray */
+}
+
+.earning-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+  background: white;
+}
+
+body.dark .earning-row {
+  background: #222;
+  border-bottom: 1px solid #444;
+  color: #fff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
+}
+
+.logout-btn {
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dash-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 16px;
+  display: grid;
+  gap: 20px;
+}
+
+.user-card,
+.video-card {
+  background: #020617;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.3);
+}
+
+.user-card h2 {
+  margin: 0 0 6px;
+}
+
+.email {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.balance-box {
+  margin-top: 14px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.video-card video {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  background: black;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #022c22;
+  font-weight: bold;
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* ===== Admin Dashboard Specifics ===== */
+:root {
+    --bg-card: #ffffff;
+    --border-color: #e2e8f0;
+    --success-green: #22c55e;
+    --admin-primary: #4f46e5; /* Indigo for Admin context */
+}
+
+body.dark {
+    --bg-card: #1e293b;
+    --border-color: #334155;
+}
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.stat-card h3 { 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+    color: #64748b; 
+    margin-bottom: 8px;
+}
+
+.stat-card p { 
+    font-size: 2rem; 
+    font-weight: 800; 
+    color: var(--success-green); 
+}
+
+/* ===== Interactive Tables ===== */
+.table-container {
+    overflow-x: auto; /* Vital for mobile admin use */
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    background: var(--bg-card);
+}
+
+th { 
+    background-color: #f8fafc; 
+    padding: 14px; 
+    text-align: left; 
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    border-bottom: 2px solid var(--border-color);
+}
+
+body.dark th {
+    background-color: #0f172a;
+    color: #94a3b8;
+}
+
+td { 
+    padding: 14px; 
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+}
+
+/* Admin Specific Buttons */
+.btn-approve {
+    background: var(--success-green);
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.btn-resolve {
+    background: #64748b;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+/* Table Responsiveness & Styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Allows swiping left/right on mobile tables */
+    -webkit-overflow-scrolling: touch;
+    margin-top: 1rem;
+    background: var(--bg-card);
+}
+
+.badge-pending {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Specific button styles to avoid confusion */
+.btn-approve, .btn-resolve {
+    width: auto; /* Overrides the 100% width from the global button style */
+    padding: 8px 16px;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.btn-approve {
+    background: #10b981;
+}
+
+.btn-resolve {
+    background: #6366f1;
+}
+
+/* Admin Stats Hover Effect */
+.stat-card:hover {
+    border-color: var(--admin-primary);
+    transform: translateY(-3px);
+}
+
+/* ===== Auth & Signup Specific Styles ===== */
+
+/* Center the signup container */
+#auth {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#auth h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+/* Subtle text for guidance */
+.hint {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+/* Input Grouping */
+#auth input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 2px solid #edf2f7;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#auth input:focus {
+    outline: none;
+    border-color: #3498db;
+    background: #fff;
+}
+
+/* Registration Button */
+#regBtn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 16px;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    transition: transform 0.2s ease;
+}
+
+#regBtn:active {
+    transform: scale(0.98);
+}
+
+#regBtn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Link at the bottom */
+.auth-footer {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.auth-footer a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Dark Mode Overrides */
+body.dark #auth {
+    background: #1e293b;
+    border: 1px solid #334155;
+    box-shadow: none;
+}
+
+body.dark #auth h2 {
+    color: #f8fafc;
+}
+
+body.dark #auth input {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+
+/* This centers the pop-up and darkens the background */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Dims the dashboard behind it */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Keeps it on top of everything */
+}
+
+/* This is the class that hides the pop-up */
+.hidden {
+  display: none !important;
+}
+
+/* Styling the pop-up box itself */
+.modal-card {
+  background: #1e293b; /* Match your dashboard color */
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
